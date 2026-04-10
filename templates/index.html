@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <!-- AOS Animations -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <!-- Vanilla Tilt (3D hover cards) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -30,8 +32,11 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
 </head>
 
-<body class="dark:bg-gray-950 bg-slate-50 dark:text-gray-100 text-gray-900 font-inter transition-colors duration-500 overflow-x-hidden">
+<body class="font-inter transition-colors duration-500 overflow-x-hidden">
 
+<!-- Premium UI Elements -->
+<div id="scroll-progress"></div>
+<div id="cursor-glow"></div>
 <!-- ══════════════════════════════════════
   NAVBAR
 ══════════════════════════════════════ -->
@@ -81,7 +86,7 @@
 <!-- ══════════════════════════════════════
   HERO SECTION
 ══════════════════════════════════════ -->
-<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 animate-gradient-bg">
   <!-- Grid background -->
   <div class="absolute inset-0 bg-grid-pattern opacity-[0.12] dark:opacity-[0.18]"></div>
   <!-- Glow orbs -->
@@ -159,7 +164,7 @@
 <!-- ══════════════════════════════════════
   ABOUT SECTION
 ══════════════════════════════════════ -->
-<section id="about" class="py-24 px-6">
+<section id="about" class="py-20 px-6">
   <div class="max-w-6xl mx-auto">
     <div class="section-header" data-aos="fade-up">
       <span class="section-badge">About Me</span>
@@ -189,39 +194,35 @@
 
       <!-- Right -->
       <div class="grid grid-cols-2 gap-4" data-aos="fade-left" data-aos-delay="200">
-        <div class="about-card col-span-2">
-          <div class="about-icon bg-cyan-500/20"><i class="fab fa-python text-cyan-400 text-2xl"></i></div>
+        <div class="about-card col-span-2 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fab fa-python text-cyan-400 text-xl"></i></div>
           <div>
-            <h3 class="font-bold dark:text-white text-gray-900">Python Development</h3>
-            <p class="text-sm dark:text-gray-400 text-gray-600 mt-1">Django · Flask · Automation · Data Pipelines</p>
+            <h3 class="font-bold dark:text-white text-gray-900 leading-tight">Python Development</h3>
+            <p class="text-xs dark:text-gray-400 text-gray-600 mt-1 uppercase tracking-wider font-medium">Django · Automation · Data</p>
           </div>
         </div>
-        <div class="about-card">
-          <div class="about-icon bg-purple-500/20"><i class="fas fa-brain text-purple-400 text-xl"></i></div>
+        <div class="about-card flex items-center gap-4">
+          <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-brain text-purple-400 text-sm"></i></div>
           <div>
-            <h3 class="font-bold text-sm dark:text-white text-gray-900">ML & NLP</h3>
-            <p class="text-xs dark:text-gray-400 text-gray-600 mt-1">Models · Gen AI</p>
+            <h3 class="font-bold text-xs dark:text-white text-gray-900 leading-tight">AI & ML</h3>
           </div>
         </div>
-        <div class="about-card">
-          <div class="about-icon bg-green-500/20"><i class="fas fa-bolt text-green-400 text-xl"></i></div>
+        <div class="about-card flex items-center gap-4">
+          <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-bolt text-green-400 text-sm"></i></div>
           <div>
-            <h3 class="font-bold text-sm dark:text-white text-gray-900">Automation</h3>
-            <p class="text-xs dark:text-gray-400 text-gray-600 mt-1">Workflows · APIs</p>
+            <h3 class="font-bold text-xs dark:text-white text-gray-900 leading-tight">Automation</h3>
           </div>
         </div>
-        <div class="about-card">
-          <div class="about-icon bg-pink-500/20"><i class="fas fa-globe text-pink-400 text-xl"></i></div>
+        <div class="about-card flex items-center gap-4">
+          <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-globe text-pink-400 text-sm"></i></div>
           <div>
-            <h3 class="font-bold text-sm dark:text-white text-gray-900">Web Dev</h3>
-            <p class="text-xs dark:text-gray-400 text-gray-600 mt-1">MERN · Django</p>
+            <h3 class="font-bold text-xs dark:text-white text-gray-900 leading-tight">Web Dev</h3>
           </div>
         </div>
-        <div class="about-card">
-          <div class="about-icon bg-yellow-500/20"><i class="fas fa-lightbulb text-yellow-400 text-xl"></i></div>
+        <div class="about-card flex items-center gap-4">
+          <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-lightbulb text-yellow-400 text-sm"></i></div>
           <div>
-            <h3 class="font-bold text-sm dark:text-white text-gray-900">Problem Solver</h3>
-            <p class="text-xs dark:text-gray-400 text-gray-600 mt-1">Real-world impact</p>
+            <h3 class="font-bold text-xs dark:text-white text-gray-900 leading-tight">Problem Solver</h3>
           </div>
         </div>
       </div>
@@ -233,7 +234,7 @@
 <!-- ══════════════════════════════════════
   SKILLS SECTION
 ══════════════════════════════════════ -->
-<section id="skills" class="py-24 px-6 dark:bg-gray-900/60 bg-slate-100">
+<section id="skills" class="py-20 px-6">
   <div class="max-w-6xl mx-auto">
     <div class="section-header" data-aos="fade-up">
       <span class="section-badge">Skills</span>
@@ -244,9 +245,9 @@
 
       <!-- 1 → Programming -->
       <div class="skill-card" data-aos="fade-up" data-aos-delay="50">
-        <div class="skill-card-header">
-          <div class="skill-icon bg-cyan-500/20"><i class="fas fa-code text-cyan-400"></i></div>
-          <h3 class="font-bold text-lg dark:text-white text-gray-900">Programming</h3>
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-code text-cyan-400"></i></div>
+          <h3 class="font-bold text-base dark:text-white text-gray-900">Programming</h3>
         </div>
         <div class="space-y-4 mt-5">
           <div>
@@ -263,9 +264,9 @@
 
       <!-- 2 → Web Development -->
       <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="skill-card-header">
-          <div class="skill-icon bg-purple-500/20"><i class="fas fa-globe text-purple-400"></i></div>
-          <h3 class="font-bold text-lg dark:text-white text-gray-900">Web Development</h3>
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-globe text-purple-400"></i></div>
+          <h3 class="font-bold text-base dark:text-white text-gray-900">Web Development</h3>
         </div>
         <div class="space-y-4 mt-5">
           <div>
@@ -282,9 +283,9 @@
 
       <!-- 3 → AI & Data -->
       <div class="skill-card" data-aos="fade-up" data-aos-delay="150">
-        <div class="skill-card-header">
-          <div class="skill-icon bg-pink-500/20"><i class="fas fa-brain text-pink-400"></i></div>
-          <h3 class="font-bold text-lg dark:text-white text-gray-900">AI & Data</h3>
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-brain text-pink-400"></i></div>
+          <h3 class="font-bold text-base dark:text-white text-gray-900">AI & Data</h3>
         </div>
         <div class="space-y-4 mt-5">
           <div>
@@ -301,9 +302,9 @@
 
       <!-- 4 → Automation -->
       <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
-        <div class="skill-card-header">
-          <div class="skill-icon bg-green-500/20"><i class="fas fa-robot text-green-400"></i></div>
-          <h3 class="font-bold text-lg dark:text-white text-gray-900">Automation</h3>
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-robot text-green-400"></i></div>
+          <h3 class="font-bold text-base dark:text-white text-gray-900">Automation</h3>
         </div>
         <div class="space-y-4 mt-5">
           <div>
@@ -320,9 +321,9 @@
 
       <!-- 5 → Databases -->
       <div class="skill-card" data-aos="fade-up" data-aos-delay="250">
-        <div class="skill-card-header">
-          <div class="skill-icon bg-yellow-500/20"><i class="fas fa-database text-yellow-400"></i></div>
-          <h3 class="font-bold text-lg dark:text-white text-gray-900">Databases</h3>
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-database text-yellow-400"></i></div>
+          <h3 class="font-bold text-base dark:text-white text-gray-900">Databases</h3>
         </div>
         <div class="space-y-4 mt-5">
           <div>
@@ -339,9 +340,9 @@
 
       <!-- 6 → Tools -->
       <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
-        <div class="skill-card-header">
-          <div class="skill-icon bg-blue-500/20"><i class="fas fa-tools text-blue-400"></i></div>
-          <h3 class="font-bold text-lg dark:text-white text-gray-900">Tools & DevOps</h3>
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-tools text-blue-400"></i></div>
+          <h3 class="font-bold text-base dark:text-white text-gray-900">Tools & DevOps</h3>
         </div>
         <div class="space-y-4 mt-5">
           <div>
@@ -356,6 +357,25 @@
         <div class="skill-tags mt-4"><span class="tag-pill">Git</span><span class="tag-pill">VS Code</span><span class="tag-pill">Postman</span><span class="tag-pill">Linux</span></div>
       </div>
 
+      <!-- 7 → Soft Skills -->
+      <div class="skill-card" data-aos="fade-up" data-aos-delay="350">
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-users text-orange-400"></i></div>
+          <h3 class="font-bold text-base dark:text-white text-gray-900">Soft Skills</h3>
+        </div>
+        <div class="space-y-4 mt-5">
+          <div>
+            <div class="flex justify-between text-sm mb-1.5"><span>Problem Solving</span><span class="text-orange-400 font-semibold">95%</span></div>
+            <div class="skill-bar"><div class="skill-fill bg-gradient-to-r from-orange-400 to-red-500" style="--tw:95%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm mb-1.5"><span>Communication</span><span class="neon-text-cyan font-semibold">90%</span></div>
+            <div class="skill-bar"><div class="skill-fill bg-gradient-to-r from-cyan-400 to-blue-500" style="--tw:90%"></div></div>
+          </div>
+        </div>
+        <div class="skill-tags mt-4"><span class="tag-pill">Teamwork</span><span class="tag-pill">Adaptability</span><span class="tag-pill">Time Management</span></div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -364,7 +384,7 @@
 <!-- ══════════════════════════════════════
   PROJECTS SECTION
 ══════════════════════════════════════ -->
-<section id="projects" class="py-24 px-6">
+<section id="projects" class="py-20 px-6">
   <div class="max-w-6xl mx-auto">
     <div class="section-header" data-aos="fade-up">
       <span class="section-badge">Portfolio</span>
@@ -380,32 +400,26 @@
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
       {% for project in featured_projects %}
-      <div class="project-card group" data-aos="fade-up" data-aos-delay="{{ loop.index * 80 }}">
-        <!-- Window dots -->
-        <div class="flex items-center gap-1.5 mb-5">
-          <span class="w-3 h-3 rounded-full bg-red-400"></span>
-          <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
-          <span class="w-3 h-3 rounded-full bg-green-400"></span>
-          <span class="ml-auto text-xs font-mono dark:text-gray-600 text-gray-400">proj_{{ "%02d"|format(loop.index) }}.py</span>
-        </div>
+      <div class="project-card gradient-border-card group relative" data-aos="fade-up" data-aos-delay="{{ loop.index * 80 }}">
+        <div class="card-glow"></div>
         <!-- Icon -->
-        <div class="w-14 h-14 rounded-2xl mb-5 flex items-center justify-center bg-gradient-to-br {{ grad_from[loop.index0] }} {{ grad_to[loop.index0] }}">
-          <i class="fas {{ icons[loop.index0] }} {{ icon_col[loop.index0] }} text-2xl"></i>
+        <div class="w-12 h-12 rounded-lg mb-6 flex items-center justify-center bg-white/10 relative z-10">
+          <i class="fas {{ icons[loop.index0] }} {{ icon_col[loop.index0] }} text-xl"></i>
         </div>
-        <h3 class="font-bold text-lg dark:text-white text-gray-900 mb-3 group-hover:neon-text-cyan transition-all duration-300">
+        <h3 class="font-bold text-xl dark:text-white text-gray-900 mb-3 group-hover:neon-text-cyan transition-all duration-300 relative z-10">
           {{ project.title }}
         </h3>
-        <p class="dark:text-gray-400 text-gray-600 text-sm leading-relaxed mb-5">
-          {{ project.description[:200] }}{% if project.description|length > 200 %}…{% endif %}
+        <p class="dark:text-gray-400 text-gray-600 text-sm leading-relaxed mb-5 line-clamp-3 relative z-10">
+          {{ project.description }}
         </p>
         <!-- Tech tags -->
-        <div class="flex flex-wrap gap-1.5 mb-6">
+        <div class="flex flex-wrap gap-1.5 mb-6 relative z-10">
           {% for tech in project.tech_stack.split(',') %}
           <span class="tag-pill text-xs">{{ tech.strip() }}</span>
           {% endfor %}
         </div>
         <!-- Action -->
-        <div class="mt-auto pt-4 border-t dark:border-gray-700/40 border-gray-200">
+        <div class="mt-auto pt-4 border-t dark:border-gray-700/40 border-gray-200 relative z-10">
           <a href="{{ linkedin_url }}" target="_blank" rel="noopener" class="btn-sm-primary w-full justify-center">
             <i class="fab fa-linkedin mr-2"></i>View Project
           </a>
@@ -466,8 +480,8 @@
 <!-- ══════════════════════════════════════
   EXPERIENCE SECTION
 ══════════════════════════════════════ -->
-<section id="experience" class="py-24 px-6 dark:bg-gray-900/60 bg-slate-100">
-  <div class="max-w-4xl mx-auto">
+<section id="experience" class="py-20 px-6">
+  <div class="max-w-6xl mx-auto">
     <div class="section-header" data-aos="fade-up">
       <span class="section-badge">Career</span>
       <h2 class="section-title">Work <span class="gradient-text">Experience</span></h2>
@@ -481,15 +495,14 @@
       <div class="relative flex flex-col md:flex-row gap-0 mb-14" data-aos="fade-right">
         <div class="md:w-1/2 md:pr-12 md:text-right pb-4 md:pb-0 pl-14 md:pl-0">
           <div class="timeline-card">
-            <span class="text-xs neon-text-cyan font-mono uppercase tracking-widest block mb-1">Jun 2024 – Sep 2024</span>
-            <h3 class="font-bold text-lg dark:text-white text-gray-900">Python Development Intern</h3>
-            <div class="text-sm text-cyan-500 dark:text-cyan-400 font-medium mb-2">Tech Solutions Pvt. Ltd.</div>
+            <span class="text-xs neon-text-cyan font-mono uppercase tracking-widest block mb-1">Sep 2025 – Oct 2025</span>
+            <h3 class="font-bold text-lg dark:text-white text-gray-900">Student Intern</h3>
+            <div class="text-sm text-cyan-500 dark:text-cyan-400 font-medium mb-2">Pythonic Lab</div>
             <p class="dark:text-gray-400 text-gray-600 text-sm leading-relaxed">
-              Developed automation scripts and Django web applications. Built REST APIs, integrated third-party services,
-              and reduced manual workflows by 60% through Python automation.
+              Developed a complete Online Polling Web Application using Django, Python, HTML, and CSS. Implemented views, templates, models, and routing. Deployed the project online and handled hosting and maintenance.
             </p>
             <div class="flex flex-wrap gap-2 mt-3 md:justify-end">
-              <span class="tag-pill text-xs">Python</span><span class="tag-pill text-xs">Django</span><span class="tag-pill text-xs">REST API</span>
+              <span class="tag-pill text-xs">Django</span><span class="tag-pill text-xs">Python</span><span class="tag-pill text-xs">Deployment</span>
             </div>
           </div>
         </div>
@@ -498,43 +511,22 @@
       </div>
 
       <!-- Item 2 -->
-      <div class="relative flex flex-col md:flex-row gap-0 mb-14" data-aos="fade-left">
+      <div class="relative flex flex-col md:flex-row gap-0" data-aos="fade-left">
         <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
         <div class="absolute md:left-1/2 left-6 top-5 w-4 h-4 rounded-full bg-purple-500 border-4 dark:border-gray-950 border-slate-50 -translate-x-1/2 z-10 shadow-[0_0_12px_rgba(179,71,255,0.7)]"></div>
         <div class="md:w-1/2 md:pl-12 pl-14">
           <div class="timeline-card">
-            <span class="text-xs neon-text-purple font-mono uppercase tracking-widest block mb-1">Jan 2024 – Apr 2024</span>
-            <h3 class="font-bold text-lg dark:text-white text-gray-900">Automation Engineering Intern</h3>
-            <div class="text-sm text-purple-500 dark:text-purple-400 font-medium mb-2">Digital Innovations Corp.</div>
+            <span class="text-xs neon-text-purple font-mono uppercase tracking-widest block mb-1">Jul 2025 – Aug 2025</span>
+            <h3 class="font-bold text-lg dark:text-white text-gray-900">Student Intern</h3>
+            <div class="text-sm text-purple-500 dark:text-purple-400 font-medium mb-2">Mernix Consulting (Remote)</div>
             <p class="dark:text-gray-400 text-gray-600 text-sm leading-relaxed">
-              Designed and implemented workflow automation systems. Integrated APIs, automated reporting pipelines,
-              and built monitoring tools using Python and scheduled tasks.
+              Built 4 web applications including a Quote Generator and Currency Converter from scratch. Improved frontend development using HTML, CSS, JavaScript, API integrations, debugging, and form handling.
             </p>
             <div class="flex flex-wrap gap-2 mt-3">
-              <span class="tag-pill text-xs">Automation</span><span class="tag-pill text-xs">API Integration</span><span class="tag-pill text-xs">SQL</span>
+              <span class="tag-pill text-xs">JavaScript</span><span class="tag-pill text-xs">HTML/CSS</span><span class="tag-pill text-xs">REST APIs</span>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Item 3 -->
-      <div class="relative flex flex-col md:flex-row gap-0" data-aos="fade-right">
-        <div class="md:w-1/2 md:pr-12 md:text-right pl-14 md:pl-0">
-          <div class="timeline-card">
-            <span class="text-xs text-green-400 font-mono uppercase tracking-widest block mb-1">Aug 2023 – Nov 2023</span>
-            <h3 class="font-bold text-lg dark:text-white text-gray-900">AI/ML Research Intern</h3>
-            <div class="text-sm text-green-600 dark:text-green-400 font-medium mb-2">AI Research Lab</div>
-            <p class="dark:text-gray-400 text-gray-600 text-sm leading-relaxed">
-              Worked on NLP models for text classification and sentiment analysis. Implemented ML pipelines using
-              Scikit-learn and developed a smart agriculture recommendation system.
-            </p>
-            <div class="flex flex-wrap gap-2 mt-3 md:justify-end">
-              <span class="tag-pill text-xs">ML</span><span class="tag-pill text-xs">NLP</span><span class="tag-pill text-xs">Scikit-learn</span>
-            </div>
-          </div>
-        </div>
-        <div class="absolute md:left-1/2 left-6 top-5 w-4 h-4 rounded-full bg-green-500 border-4 dark:border-gray-950 border-slate-50 -translate-x-1/2 z-10 shadow-[0_0_12px_rgba(57,255,20,0.6)]"></div>
-        <div class="md:w-1/2 md:pl-12 hidden md:block"></div>
       </div>
     </div>
   </div>
@@ -544,7 +536,7 @@
 <!-- ══════════════════════════════════════
   CERTIFICATIONS SECTION
 ══════════════════════════════════════ -->
-<section id="certifications" class="py-24 px-6">
+<section id="certifications" class="py-20 px-6">
   <div class="max-w-6xl mx-auto">
     <div class="section-header" data-aos="fade-up">
       <span class="section-badge">Credentials</span>
@@ -552,19 +544,18 @@
     </div>
 
     {% set certs = [
-      ("Python for Everybody",         "University of Michigan", "fa-graduation-cap", "text-cyan-400",   "bg-cyan-500/20",   "2024"),
-      ("Machine Learning Specialization","Coursera / Stanford",  "fa-brain",          "text-purple-400", "bg-purple-500/20", "2024"),
-      ("Django Web Framework",         "Meta / Coursera",        "fa-code",           "text-green-400",  "bg-green-500/20",  "2023"),
-      ("Data Science with Python",     "IBM",                    "fa-chart-bar",      "text-yellow-400", "bg-yellow-500/20", "2023"),
-      ("NLP with Python",              "NLTK Foundation",        "fa-language",       "text-pink-400",   "bg-pink-500/20",   "2023"),
-      ("Git & GitHub Essentials",      "GitHub",                 "fa-code-branch",    "text-blue-400",   "bg-blue-500/20",   "2022"),
+      ("Young Innovator",              "Scaler School of Technology", "fa-lightbulb",      "text-cyan-400",   "bg-cyan-500/20",   "2024"),
+      ("Django Web Framework & REST API", "Kamal Classes",            "fa-code",           "text-green-400",  "bg-green-500/20",  "2024"),
+      ("Java App Development",         "DMCOE",                       "fa-coffee",         "text-yellow-400", "bg-yellow-500/20", "2024"),
+      ("Python Developer Certification", "Kamal Classes",             "fa-terminal",       "text-blue-400",   "bg-blue-500/20",   "2024"),
+      ("Django Developer Internship",  "Pythonic Lab",                "fa-laptop-code",    "text-purple-400", "bg-purple-500/20", "2025"),
     ] %}
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
       {% for name, issuer, icon, color, bg, year in certs %}
-      <div class="cert-card" data-aos="zoom-in" data-aos-delay="{{ loop.index * 60 }}">
+      <div class="cert-card group" data-aos="zoom-in" data-aos-delay="{{ loop.index * 60 }}">
         <div class="flex items-start gap-4">
-          <div class="w-12 h-12 rounded-xl {{ bg }} flex items-center justify-center flex-shrink-0">
+          <div class="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:bg-cyan-500/10">
             <i class="fas {{ icon }} {{ color }} text-xl"></i>
           </div>
           <div class="flex-1">
@@ -586,8 +577,8 @@
 <!-- ══════════════════════════════════════
   CONTACT SECTION
 ══════════════════════════════════════ -->
-<section id="contact" class="py-24 px-6 dark:bg-gray-900/60 bg-slate-100">
-  <div class="max-w-5xl mx-auto">
+<section id="contact" class="py-20 px-6">
+  <div class="max-w-6xl mx-auto">
     <div class="section-header" data-aos="fade-up">
       <span class="section-badge">Let's Talk</span>
       <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
@@ -604,26 +595,34 @@
           Have a project, a role, or just want to say hi? Drop me a message and I'll get back to you promptly.
         </p>
 
-        <div class="space-y-4">
-          <!-- Email -->
-          <a href="mailto:patilhemant1103@gmail.com" class="contact-card">
-            <div class="contact-icon bg-cyan-500/20">
-              <i class="fas fa-envelope text-cyan-400 text-lg"></i>
-            </div>
-            <div>
-              <div class="text-xs dark:text-gray-400 text-gray-500 uppercase tracking-wider mb-0.5">Email</div>
-              <div class="font-semibold dark:text-white text-gray-900">patilhemant1103@gmail.com</div>
+        <div class="grid gap-5 mt-8">
+          <!-- Email link -->
+          <a href="mailto:patilhemant1103@gmail.com?subject=Portfolio%20Inquiry" 
+             class="contact-card group" 
+             aria-label="Send an email to Hemant Patil">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:bg-cyan-500/20">
+                <i class="fas fa-envelope text-cyan-400 text-lg"></i>
+              </div>
+              <div class="flex-1">
+                <div class="text-[10px] dark:text-gray-400 text-gray-500 uppercase tracking-widest font-bold mb-0.5">Contact Me</div>
+                <div class="text-base font-bold dark:text-white text-gray-900 break-all">patilhemant1103@gmail.com</div>
+              </div>
             </div>
           </a>
 
-          <!-- LinkedIn -->
-          <a href="{{ linkedin_url }}" target="_blank" rel="noopener" class="contact-card">
-            <div class="contact-icon bg-blue-500/20">
-              <i class="fab fa-linkedin-in text-blue-400 text-lg"></i>
-            </div>
-            <div>
-              <div class="text-xs dark:text-gray-400 text-gray-500 uppercase tracking-wider mb-0.5">LinkedIn</div>
-              <div class="font-semibold dark:text-white text-gray-900">hemant-patil-2b4bb1312</div>
+          <!-- LinkedIn link -->
+          <a href="{{ linkedin_url }}" target="_blank" rel="noopener" 
+             class="contact-card group" 
+             aria-label="Visit Hemant Patil's LinkedIn Profile">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:bg-blue-500/20">
+                <i class="fab fa-linkedin-in text-blue-400 text-lg"></i>
+              </div>
+              <div class="flex-1">
+                <div class="text-[10px] dark:text-gray-400 text-gray-500 uppercase tracking-widest font-bold mb-0.5">LinkedIn Profile</div>
+                <div class="text-base font-bold dark:text-white text-gray-900">hemant-patil-2b4bb1312</div>
+              </div>
             </div>
           </a>
         </div>
@@ -642,24 +641,26 @@
 
       <!-- Right – Contact form -->
       <div data-aos="fade-left">
-        <form id="contact-form" class="glass-card p-8 rounded-2xl space-y-5">
-          <h3 class="font-bold text-lg dark:text-white text-gray-900 mb-1">Send a Message</h3>
-          <div>
-            <label for="contact-name" class="form-label">Your Name</label>
-            <input type="text" id="contact-name" placeholder="e.g. Priya Sharma"
-              class="form-input" required/>
+        <form id="contact-form" class="glass-card p-10 rounded-2xl flex flex-col h-full space-y-6">
+          <h3 class="font-bold text-2xl dark:text-white text-gray-900 mb-2">Send a Message</h3>
+          <div class="space-y-4">
+            <div>
+              <label for="contact-name" class="form-label">Your Name</label>
+              <input type="text" id="contact-name" placeholder="e.g. Priya Sharma"
+                class="form-input h-14" required/>
+            </div>
+            <div>
+              <label for="contact-email" class="form-label">Your Email</label>
+              <input type="email" id="contact-email" placeholder="priya@company.com"
+                class="form-input h-14" required/>
+            </div>
+            <div>
+              <label for="contact-message" class="form-label">Message</label>
+              <textarea id="contact-message" rows="5" placeholder="Write your message here…"
+                class="form-input resize-none p-4" required></textarea>
+            </div>
           </div>
-          <div>
-            <label for="contact-email" class="form-label">Your Email</label>
-            <input type="email" id="contact-email" placeholder="priya@company.com"
-              class="form-input" required/>
-          </div>
-          <div>
-            <label for="contact-message" class="form-label">Message</label>
-            <textarea id="contact-message" rows="4" placeholder="Write your message here…"
-              class="form-input resize-none" required></textarea>
-          </div>
-          <button type="submit" id="contact-submit" class="btn-primary w-full justify-center">
+          <button type="submit" id="contact-submit" class="btn-primary w-full h-14 justify-center text-base">
             <i class="fas fa-paper-plane mr-2"></i>Send Message
           </button>
           <div id="contact-result" class="hidden text-sm font-medium text-center py-2.5 px-4 rounded-xl"></div>
@@ -678,7 +679,7 @@
     <span class="font-orbitron font-black text-xl neon-text-cyan">HP<span class="dark:text-white text-gray-900">.</span>dev</span>
 
     <p class="text-sm dark:text-gray-500 text-gray-500 text-center">
-      © 2024 Hemant Patil &nbsp;·&nbsp; Built with <span class="text-red-400">♥</span> using Flask &amp; Tailwind CSS
+      © 2026 Hemant Patil &nbsp;·&nbsp; Built with <span class="text-red-400">♥</span> using Flask &amp; Tailwind CSS
     </p>
 
     <div class="flex items-center gap-3">
@@ -693,7 +694,7 @@
   AI CHATBOT WIDGET
 ══════════════════════════════════════ -->
 <div id="chatbot-widget" class="fixed bottom-24 right-6 z-50 w-80 hidden">
-  <div class="rounded-2xl overflow-hidden shadow-2xl border dark:border-cyan-500/30 border-cyan-300/50 dark:bg-gray-900 bg-white">
+  <div class="rounded-2xl overflow-hidden shadow-2xl border dark:border-cyan-500/30 border-cyan-300/50  bg-white">
     <!-- Header -->
     <div class="bg-gradient-to-r from-cyan-600 to-purple-700 px-4 py-3.5 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -720,7 +721,7 @@
     <!-- Input -->
     <div class="p-3 border-t dark:border-gray-700/40 border-gray-100 flex gap-2">
       <input id="chatbot-input" type="text" placeholder="Ask anything…"
-        class="flex-1 text-sm px-3 py-2 rounded-xl dark:bg-gray-800 bg-gray-100 dark:text-white text-gray-900
+        class="flex-1 text-sm px-3 py-2 rounded-xl  bg-gray-100 dark:text-white text-gray-900
                border dark:border-gray-700 border-gray-200 focus:outline-none focus:border-cyan-400 transition-colors"/>
       <button onclick="sendChat()"
         class="w-9 h-9 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl flex items-center justify-center hover:scale-110 transition-transform">

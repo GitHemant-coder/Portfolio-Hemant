@@ -6,6 +6,25 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
 import functools
+import PyPDF2
+import google.generativeai as genai
+from dotenv import load_dotenv
+
+load_dotenv()
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
+
+# Load resume text
+RESUME_TEXT = ""
+try:
+    resume_path = os.path.join(os.path.dirname(__file__), "static", "assets", "Hemant_Patil_Resume.pdf")
+    if os.path.exists(resume_path):
+        reader = PyPDF2.PdfReader(resume_path)
+        for page in reader.pages:
+            RESUME_TEXT += page.extract_text() + "\n"
+except Exception as e:
+    print(f"Failed to parse resume: {e}")
 
 app = Flask(__name__)
 app.secret_key = "hemant_portfolio_secret_2024_hp"
@@ -224,35 +243,64 @@ def visitor_count_route():
 # ─────────────────────────────────────────────
 # AI CHATBOT
 # ─────────────────────────────────────────────
-CHATBOT_KB = [
-    (["skill","know","technology","tech","language","stack"],
-     "Hemant is skilled in Python, JavaScript, Django, MERN Stack, Machine Learning, NLP, Generative AI, MySQL, MongoDB, Git, and automation technologies."),
-    (["python"],
-     "Hemant is an expert Python developer — web apps with Django/Flask, automation scripts, ML pipelines, and data processing."),
-    (["project","built","made","created","developed"],
-     "Hemant has built a Student Management System, Online Polling System, Auto Screenshot & Email System, Hospital Reception Automation, House Price Prediction, and KrushiSarthi Agriculture Platform."),
-    (["experience","intern","work","job","career"],
-     "Hemant has completed internships in Python Development, Automation Engineering, and AI/ML research, gaining strong industrial experience."),
-    (["ml","machine learning","ai","artificial","nlp","deep","neural","model"],
-     "Hemant has strong ML/AI skills — Scikit-learn, NLP with NLTK/spaCy, and Generative AI tools."),
-    (["automat"],
-     "Hemant specialises in Python automation — workflow automation, API integration, screenshot capture, email systems, and more."),
-    (["django","flask","web","mern","react","node"],
-     "Hemant has built multiple full-stack web apps using Django and Flask, and is proficient in the MERN stack."),
-    (["contact","reach","hire","email","linkedin","connect"],
-     f"You can reach Hemant at patilhemant1103@gmail.com or on LinkedIn: {LINKEDIN_URL}"),
-    (["hello","hi","hey","who"],
-     "Hi! I'm Hemant's AI assistant 👋 Ask me about his skills, projects, experience, or how to contact him!"),
-]
-
 @app.route("/chatbot", methods=["POST"])
 def chatbot():
-    msg  = request.get_json().get("message", "").lower()
-    reply = "I'm Hemant's portfolio assistant! Ask me about his skills, projects, experience, or how to hire him. 😊"
-    for keywords, response in CHATBOT_KB:
-        if any(kw in msg for kw in keywords):
+    msg  = request.get_json().get("message", "").strip()
+    
+    if not msg:
+        return jsonify({"reply": "Feel free to ask me anything about Hemant's skills or experience!"})
+
+    if GEMINI_API_KEY:
+        try:
+            prompt = f"""
+            You are a professional AI assistant for Hemant Patil's portfolio website. 
+            Your goal is to answer visitor questions directly based ONLY on the resume text provided below.
+            Answer in a friendly, conversational, and concise tone (under 3 sentences if possible).
+            If the answer doesn't exist in the resume, just mention that you don't know but they can reach out via contact form.
+            
+            Hemant's Resume Data:
+            {RESUME_TEXT}
+            
+            Note: Hemant also possesses strong soft skills including Problem Solving, Communication, Teamwork, Adaptability, Leadership, and Time Management.
+            
+            Visitor's Question:
+            {msg}
+            """
+            
+            model = genai.GenerativeModel("gemini-1.5-flash")
+            response = model.generate_content(prompt)
+            reply = response.text
+            
+            # small cleanup for markdown asterisks if needed
+            reply = reply.replace("**", "")
+            
+            return jsonify({"reply": reply.strip()})
+        except Exception as e:
+            print(f"Gemini API Error: {e}")
+            # fallback below
+            
+    # Fallback to old strict KB if API key not found or error
+    CHK_KB = [
+        (["soft","soft skill","communication","teamwork","problem solving","time management","leadership"],
+         "Hemant's core soft skills include Problem Solving, Communication, Teamwork, Adaptability, Leadership, and Time Management!"),
+        (["skill","know","technology","tech","language","stack"],
+         "Hemant is skilled in Python, JavaScript, Django, MERN Stack, Machine Learning, NLP, Generative AI, MySQL, MongoDB, Git, and automation technologies."),
+        (["python"],
+         "Hemant is an expert Python developer — web apps with Django/Flask, automation scripts, ML pipelines, and data processing."),
+        (["project","built","made","created","developed"],
+         "Hemant has built multiple impactful AI, web, and automation projects. Feel free to explore the Projects section!"),
+        (["experience","intern","work","job","career"],
+         "Hemant has completed internships in Python Development, Automation Engineering, and AI/ML research!"),
+        (["hello","hi","hey","who"],
+         "Hi! I'm Hemant's AI assistant 👋 Ask me about his skills, projects, experience, or how to contact him!"),
+    ]
+    
+    reply = "I'm having trouble connecting to my brain right now, but I am Hemant's assistant! Reach out via the contact form to learn more."
+    for keywords, response in CHK_KB:
+        if any(kw in msg.lower() for kw in keywords):
             reply = response
             break
+
     return jsonify({"reply": reply})
 
 # ─────────────────────────────────────────────
