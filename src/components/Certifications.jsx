@@ -51,6 +51,15 @@ export default function Certifications() {
     }
   ];
 
+  const handleMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+  };
+
   return (
     <section className="py-[90px]" id="certifications">
       <div className="max-w-[1180px] mx-auto px-8">
@@ -74,13 +83,14 @@ export default function Certifications() {
           {certs.map((cert, index) => (
             <div 
               key={index}
-              className={`flex items-center gap-4 bg-card border border-line rounded-[14px] p-[18px] px-[20px] reveal-scale ${gridVisible ? 'visible' : ''} hover-lift group`}
+              onMouseMove={handleMouseMove}
+              className={`flex items-center gap-4 bg-card border border-line rounded-[14px] p-[18px] px-[20px] reveal-scale ${gridVisible ? 'visible' : ''} hover-lift group spotlight-card`}
               style={{ transitionDelay: `${index * 80}ms` }}
             >
               <div className={`w-11 h-11 rounded-lg shrink-0 flex items-center justify-center ${cert.bgClass} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12`}>
                 {cert.icon}
               </div>
-              <div>
+              <div className="relative z-10">
                 <div className="text-[14.5px] font-bold text-ink leading-tight">
                   {cert.name}
                 </div>

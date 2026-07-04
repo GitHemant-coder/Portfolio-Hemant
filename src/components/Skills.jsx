@@ -48,6 +48,24 @@ export default function Skills() {
     }
   ];
 
+  const handleSkillClick = (skill) => {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    const event = new CustomEvent('highlight-skill', { detail: { skill } });
+    window.dispatchEvent(event);
+  };
+
+  const handleMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+  };
+
   return (
     <section className="py-[90px] bg-cream2 border-y border-line" id="skills">
       <div className="max-w-[1180px] mx-auto px-8">
@@ -60,7 +78,7 @@ export default function Skills() {
             <h2 className="text-3xl sm:text-[42px] font-serif font-bold text-ink leading-tight">Technical skills.</h2>
           </div>
           <p className="text-ink-soft text-[14.5px] max-w-[320px] leading-[1.7]">
-            The languages, frameworks, and tools I reach for when building something real.
+            The languages, frameworks, and tools I reach for when building something real (click any skill to see where it was used).
           </p>
         </div>
 
@@ -71,20 +89,22 @@ export default function Skills() {
           {skillCategories.map((category, index) => (
             <div
               key={index}
-              className={`bg-card border border-line rounded-2xl p-[22px] flex flex-col border-t-4 ${category.borderClass} reveal-scale ${gridVisible ? 'visible' : ''} hover-lift`}
+              onMouseMove={handleMouseMove}
+              className={`bg-card border border-line rounded-2xl p-[22px] flex flex-col border-t-4 ${category.borderClass} reveal-scale ${gridVisible ? 'visible' : ''} hover-lift spotlight-card`}
               style={{ transitionDelay: `${index * 80}ms` }}
             >
-              <h4 className="font-mono text-[11.5px] tracking-[0.08em] uppercase font-bold text-ink-soft mb-3.5">
+              <h4 className="font-mono text-[11.5px] tracking-[0.08em] uppercase font-bold text-ink-soft mb-3.5 relative z-10">
                 {category.title}
               </h4>
-              <div className="flex flex-wrap gap-1.75">
+              <div className="flex flex-wrap gap-1.5">
                 {category.skills.map((skill, sIndex) => (
-                  <span
+                  <button
                     key={sIndex}
-                    className="bg-cream2 text-[12.5px] font-semibold px-3 py-1.5 rounded-lg border border-line text-ink hover:scale-105 hover:bg-cream hover:border-terracotta/40 transition-all duration-200"
+                    onClick={() => handleSkillClick(skill)}
+                    className="bg-cream2 text-[12.5px] font-semibold px-3 py-1.5 rounded-lg border border-line text-ink hover:scale-105 hover:bg-cream hover:border-terracotta hover:text-terracotta-deep active:scale-95 transition-all duration-200 cursor-pointer text-left relative z-10"
                   >
                     {skill}
-                  </span>
+                  </button>
                 ))}
               </div>
             </div>

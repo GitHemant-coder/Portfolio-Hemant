@@ -115,9 +115,10 @@ export default function CareerRoadmap() {
                 <button
                   key={index}
                   onClick={() => setActiveNode(index)}
-                  className={`flex items-center gap-4 text-left group cursor-pointer bg-transparent border-none p-2 outline-none select-none transition-all duration-200 ${
-                    isActive ? 'scale-[1.03]' : 'opacity-70 hover:opacity-100'
-                  }`}
+                  className={`flex items-center gap-4 text-left group cursor-pointer bg-transparent border-none p-2 outline-none select-none transition-all duration-300 reveal-left ${
+                    roadmapVisible ? 'visible' : ''
+                  } ${isActive ? 'scale-[1.03] !opacity-100' : 'opacity-70 hover:opacity-100'}`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
                 >
                   {/* Point circle on timeline */}
                   <div

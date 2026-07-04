@@ -13,10 +13,12 @@ import DevTerminal from './components/DevTerminal';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ChatbotWidget from './components/ChatbotWidget';
+import MatrixBackground from './components/MatrixBackground';
 
 function App() {
   return (
     <>
+      <MatrixBackground />
       <Navbar />
       <Hero />
       <MarqueeStrip />

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useReveal from '../hooks/useReveal';
+import VoiceTourWidget from './VoiceVisualizer';
+import { Volume2, VolumeX } from 'lucide-react';
 
 export default function Hero() {
   const [textRef, textVisible] = useReveal(0.05);
@@ -7,6 +9,7 @@ export default function Hero() {
   const [statRef, statVisible] = useReveal(0.1);
   const [skillRef, skillVisible] = useReveal(0.1);
   const [quoteRef, quoteVisible] = useReveal(0.1);
+  const [showVoiceTour, setShowVoiceTour] = useState(false);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -36,7 +39,7 @@ export default function Hero() {
           </p>
           <div className="flex gap-3.5 flex-wrap">
             <button 
-              className="inline-flex items-center gap-2 bg-ink text-cream px-6 py-[13px] rounded-full text-sm font-bold border-none cursor-pointer transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(33,29,24,0.25)] group"
+              className="inline-flex items-center gap-2 bg-ink text-cream px-6 py-[13px] rounded-full text-sm font-bold border-none cursor-pointer transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(33,29,24,0.25)] group active:scale-95"
               onClick={() => scrollToSection('projects')}
             >
               View My Work <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">→</span>
@@ -44,10 +47,17 @@ export default function Hero() {
             <a 
               href="/Hemant_Vilas_Patil_Resume.pdf"
               download="Hemant_Vilas_Patil_Resume.pdf"
-              className="inline-flex items-center gap-2 bg-transparent border-[1.5px] border-ink text-ink px-6 py-[13px] rounded-full text-sm font-bold cursor-pointer transition-all duration-150 hover:-translate-y-0.5 hover:bg-ink hover:text-cream no-underline"
+              className="inline-flex items-center gap-2 bg-transparent border-[1.5px] border-ink text-ink px-6 py-[13px] rounded-full text-sm font-bold cursor-pointer transition-all duration-150 hover:-translate-y-0.5 hover:bg-ink hover:text-cream no-underline active:scale-95"
             >
               Download Resume
             </a>
+            <button 
+              className="inline-flex items-center gap-2.5 bg-card border-[1.5px] border-line text-ink px-6 py-[13px] rounded-full text-sm font-bold cursor-pointer transition-all duration-150 hover:-translate-y-0.5 hover:bg-cream2/60 relative z-10 active:scale-95"
+              onClick={() => setShowVoiceTour(!showVoiceTour)}
+            >
+              {showVoiceTour ? <VolumeX size={15} className="text-red-500" /> : <Volume2 size={15} />}
+              {showVoiceTour ? 'Stop Voice Tour' : 'Listen to AI Tour'}
+            </button>
           </div>
         </div>
 
@@ -111,6 +121,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
+      {showVoiceTour && <VoiceTourWidget onClose={() => setShowVoiceTour(false)} />}
     </section>
   );
 }
