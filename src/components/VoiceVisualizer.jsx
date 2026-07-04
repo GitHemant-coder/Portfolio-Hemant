@@ -94,12 +94,36 @@ export default function VoiceTourWidget({ onClose }) {
       const utterance = new SpeechSynthesisUtterance(fullText);
       utterRef.current = utterance;
 
-      // Select voice: Prefer high-quality US English
-      const voices = window.speechSynthesis.getVoices();
-      const usVoice = voices.find(v => v.lang.startsWith('en-US') && v.name.includes('Natural')) || 
-                      voices.find(v => v.lang.startsWith('en-US')) ||
-                      voices.find(v => v.lang.startsWith('en'));
-      if (usVoice) utterance.voice = usVoice;
+      // Select voice: Prioritize Male voices (David, Daniel, Aaron, Google Male, etc.)
+      const getMaleVoice = () => {
+        const voices = window.speechSynthesis.getVoices();
+        const maleKeywords = ['david', 'male', 'daniel', 'aaron', 'google us english 1', 'en-us-x-sfg#male', 'premium male'];
+        
+        let matched = voices.find(v => {
+          const nameLower = v.name.toLowerCase();
+          return v.lang.toLowerCase().startsWith('en') && 
+                 maleKeywords.some(kw => nameLower.includes(kw));
+        });
+        
+        if (!matched) {
+          matched = voices.find(v => v.name.includes('David'));
+        }
+        
+        if (!matched) {
+          matched = voices.find(v => v.lang.startsWith('en-US')) || voices.find(v => v.lang.startsWith('en'));
+        }
+        
+        return matched;
+      };
+
+      const matchedVoice = getMaleVoice();
+      if (matchedVoice) utterance.voice = matchedVoice;
+
+      // Handle async voice updates (common in Chrome/Android)
+      window.speechSynthesis.onvoiceschanged = () => {
+        const updatedVoice = getMaleVoice();
+        if (updatedVoice) utterance.voice = updatedVoice;
+      };
 
       utterance.rate = 1.02; // natural pace
       utterance.pitch = 1.05;
