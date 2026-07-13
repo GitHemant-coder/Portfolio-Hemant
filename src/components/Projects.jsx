@@ -569,10 +569,27 @@ export default function Projects() {
   const handleMouseMove = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
+    
     card.style.setProperty('--mouse-x', `${x}px`);
     card.style.setProperty('--mouse-y', `${y}px`);
+
+    const rotateX = -((y - h / 2) / h * 12).toFixed(2);
+    const rotateY = ((x - w / 2) / w * 12).toFixed(2);
+
+    card.style.transition = 'transform 0.1s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s';
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    card.style.boxShadow = '0 20px 40px -15px rgba(33,29,24,0.18)';
+  };
+
+  const handleMouseLeave = (e) => {
+    const card = e.currentTarget;
+    card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s';
+    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    card.style.boxShadow = '';
   };
 
   const filterCategories = ['All', 'Web Dev', 'AI / ML', 'AI Automation'];
@@ -708,6 +725,7 @@ export default function Projects() {
                   setModalTab('details');
                 }}
                 onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
                 className={`bg-card rounded-[18px] overflow-hidden border flex flex-col reveal-scale ${gridVisible ? 'visible' : ''} hover-lift group cursor-pointer transition-all duration-300 spotlight-card ${
                   isHighlighted 
                     ? 'ring-[3px] ring-terracotta border-terracotta scale-[1.03] shadow-lg shadow-terracotta/20 animate-pulse'

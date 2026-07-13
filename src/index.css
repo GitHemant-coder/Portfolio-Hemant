@@ -229,4 +229,25 @@
       transparent 85%
     );
   }
+
+  /* Bento Custom Animations */
+  @keyframes pipeline-flow {
+    0% { left: -10%; opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { left: 110%; opacity: 0; }
+  }
+  .animate-pipeline-flow {
+    animation: pipeline-flow 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+  
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--color-terracotta) }
+  }
+  .animate-blink-caret {
+    border-right: 2px solid var(--color-terracotta);
+    animation: blink-caret 0.75s step-end infinite;
+  }
 }
+
